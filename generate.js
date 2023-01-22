@@ -11,14 +11,25 @@ fs.readdir(__dirname, async function (err, files) {
 
         zip.forEach((path, file) => {
             if (file.name.endsWith(".qua")) {
+                // only the first one
+
                 file.async("string").then((data) => {
                     let parsed = yaml.load(data)
-                    list.push(parsed)
+                    list.push({
+                        title: parsed.Title,
+                        artist: parsed.Artist,
+                        mapId: parsed.MapId,
+                        mapSetId: parsed.MapSetId
+                    })
                 })
-                return
             }
         })
+        // if list has duplicates, remove them (only keep the first one) (match with title)
         console.log("finished parsing " + file)
     });
-    fs.writeFileSync("list.json", JSON.stringify(list))
+    setTimeout(() => {
+        list = list.filter((thing, index, self) => index === self.findIndex((t) => (t.title === thing.title)))
+        // wait for all files to be parsed
+        fs.writeFileSync("list.json", JSON.stringify(list))
+    }, 2000);
 })
