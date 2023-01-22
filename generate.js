@@ -3,10 +3,10 @@ const JSZip = require("jszip")
 const yaml = require("js-yaml")
 let list = []
 fs.readdir(__dirname, async function (err, files) {
-    await files.forEach(async file => {
-        if (!file.endsWith(".qp")) return
+    await files.forEach(async topfile => {
+        if (!topfile.endsWith(".qp")) return
         // read file as zip
-        let data = await fs.readFileSync(file)
+        let data = await fs.readFileSync(topfile)
         let zip = await JSZip.loadAsync(data)
 
         zip.forEach((path, file) => {
@@ -19,13 +19,14 @@ fs.readdir(__dirname, async function (err, files) {
                         title: parsed.Title,
                         artist: parsed.Artist,
                         mapId: parsed.MapId,
-                        mapSetId: parsed.MapSetId
+                        mapSetId: parsed.MapSetId,
+                        file: topfile
                     })
                 })
             }
         })
         // if list has duplicates, remove them (only keep the first one) (match with title)
-        console.log("finished parsing " + file)
+        console.log("finished parsing " + topfile)
     });
     setTimeout(() => {
         list = list.filter((thing, index, self) => index === self.findIndex((t) => (t.title === thing.title)))
