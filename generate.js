@@ -20,6 +20,7 @@ fs.readdir(__dirname, async function (err, files) {
                         artist: parsed.Artist,
                         mapId: parsed.MapId,
                         mapSetId: parsed.MapSetId,
+                        difficultyName: parsed.DifficultyName,
                         file: topfile
                     })
                 })
