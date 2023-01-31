@@ -26,6 +26,5 @@ exec("git push origin master", function (err, stdout, stderr) {
     } else {
         console.log(stdout);
     }
+    console.log("Finished publishing maps, list will update in a few minutes.")
 })
-
-console.log("Finished publishing maps, list will update in a few minutes.")
