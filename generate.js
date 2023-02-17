@@ -31,7 +31,6 @@ fs.readdir(__dirname, async function (err, files) {
                 file.async("nodebuffer").then((data) => {
                     let name = topfile.split(".")[0] + "." + file.name.split(".")[1]
                     // check if exists already
-                    if (fs.existsSync(__dirname + "/images/" + name)) return
                     fs.writeFileSync(__dirname + "/images/" + name, data)
                 })
             }
@@ -43,5 +42,5 @@ fs.readdir(__dirname, async function (err, files) {
         list = list.filter((thing, index, self) => index === self.findIndex((t) => (t.title === thing.title)))
         // wait for all files to be parsed
         fs.writeFileSync("list.json", JSON.stringify(list))
-    }, 2000);
+    }, 5000);
 })
