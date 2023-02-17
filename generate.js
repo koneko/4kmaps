@@ -7,6 +7,7 @@ fs.readdir(__dirname, async function (err, files) {
         if (!topfile.endsWith(".qp")) return
         // read file as zip
         let data = await fs.readFileSync(topfile)
+        console.log(topfile)
         let zip = await JSZip.loadAsync(data)
 
         zip.forEach((path, file) => {
@@ -28,7 +29,10 @@ fs.readdir(__dirname, async function (err, files) {
             // if ends in .png or .jpg, save it to images folder
             if (file.name.endsWith(".png") || file.name.endsWith(".jpg")) {
                 file.async("nodebuffer").then((data) => {
-                    fs.writeFileSync(__dirname + "/images/" + topfile.name.split(".")[0] + file.name.split(".")[1], data)
+                    let name = topfile.split(".")[0] + "." + file.name.split(".")[1]
+                    // check if exists already
+                    if (fs.existsSync(__dirname + "/images/" + name)) return
+                    fs.writeFileSync(__dirname + "/images/" + name, data)
                 })
             }
         })
