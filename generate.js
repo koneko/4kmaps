@@ -25,6 +25,12 @@ fs.readdir(__dirname, async function (err, files) {
                     })
                 })
             }
+            // if ends in .png or .jpg, save it to images folder
+            if (file.name.endsWith(".png") || file.name.endsWith(".jpg")) {
+                file.async("nodebuffer").then((data) => {
+                    fs.writeFileSync(__dirname + "/images/" + file.name.split(".")[0] + file.split(".")[1], data)
+                })
+            }
         })
         // if list has duplicates, remove them (only keep the first one) (match with title)
         console.log("finished parsing " + topfile)
