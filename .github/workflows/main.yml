@@ -23,8 +23,9 @@ jobs:
         node generate.js
     - name: Commit
       run: |
-        git config --local user.name  ${{ github.actor }}
-        git add list.json
+        git config --local user.name  "koneko"
+        git config --local user.email  67551503+koneko@users.noreply.github.com
+        git add .
         git commit -m "update list.json"
     - name: Push changes  # push the output folder to your repo
       uses: ad-m/github-push-action@master
