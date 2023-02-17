@@ -31,7 +31,7 @@ fs.readdir(__dirname, async function (err, files) {
                 file.async("nodebuffer").then((data) => {
                     let name = topfile.split(".")[0] + "." + file.name.split(".")[1]
                     // check if exists already
-                    fs.writeFileSync("/images/" + name, data)
+                    fs.writeFileSync("./images/" + name, data)
                 })
             }
         })
