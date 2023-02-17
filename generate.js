@@ -29,9 +29,14 @@ fs.readdir(__dirname, async function (err, files) {
             // if ends in .png or .jpg, save it to images folder
             if (file.name.endsWith(".png") || file.name.endsWith(".jpg")) {
                 file.async("nodebuffer").then((data) => {
-                    let name = topfile.split(".")[0] + "." + file.name.split(".")[1]
+                    let name = topfile.split(".")[0] + "."
+                    // file.name.split last . and get the last part
+                    // get file extension
+                    // if file exists, don't overwrite it
+                    // its the last, not the first, so get the last dot (there can be more than one)
+                    let ext = file.name.split(".").slice(-1)[0]
                     // check if exists already
-                    fs.writeFileSync("./images/" + name, data)
+                    fs.writeFileSync("./images/" + name + ext, data)
                 })
             }
         })
